@@ -10,8 +10,7 @@ def get_html(url):
 def refined(s):
     # 1, 496 total ratings
     r = s.split(' ')[0]
-    result = r.replace(',', '')
-    print(result)
+    return r.replace(',', '')
 
 
 def get_data(html):
@@ -22,9 +21,9 @@ def get_data(html):
     for plugin in plugins:
         name = plugin.find('h3').text
         url = plugin.find('h3').find('a').get('href')
-        rating = plugin.find('span', class_='rating-count').find('a').text
-        refined(rating)
-        # print(rating)
+        r = plugin.find('span', class_='rating-count').find('a').text
+        rating = refined(r)
+        print(rating)
 
     # return plugins
 
