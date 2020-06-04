@@ -10,7 +10,13 @@ def get_html(url):
 def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
     popular = soup.find_all('section')[1]
-    return popular
+    plugins = popular.find_all('article')
+
+    for plugin in plugins:
+        name = plugin.find('h3')
+        print(name)
+
+    # return plugins
 
 
 def main():
