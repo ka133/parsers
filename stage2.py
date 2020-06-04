@@ -16,7 +16,7 @@ def refined(s):
 
 def write_csv(data):
     """use context-manager with"""
-    with open('plugins.csv', 'a') as f:   #w -wright - перезаписывает, a - append
+    with open('plugins.csv', 'a') as f:
         writer = csv.writer(f)
 
         writer.writerow((data['name'],
@@ -24,27 +24,20 @@ def write_csv(data):
                          data['rating']))
 
 
-
-
-
 def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
     popular = soup.find_all('section')[1]
-    plugins = popular.find_all('article')
+    plugins = popular.find_all('article') #resultset ~ list
 
     for plugin in plugins:
         name = plugin.find('h3').text
         url = plugin.find('h3').find('a').get('href')
         r = plugin.find('span', class_='rating-count').find('a').text
         rating = refined(r)
-
         data ={'name': name,
                'url': url,
                'rating': rating}
-        # print(data)
         write_csv(data)
-
-    # return plugins
 
 
 def main():
