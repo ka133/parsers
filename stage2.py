@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import csv
 
 
 def get_html(url):
@@ -13,6 +14,19 @@ def refined(s):
     return r.replace(',', '')
 
 
+def write_csv(data):
+    """use context-manager with"""
+    with open('plugins.csv', 'a') as f:   #w -wright - перезаписывает, a - append
+        writer = csv.writer(f)
+
+        writer.writerow((data['name'],
+                         data['url'],
+                         data['rating']))
+
+
+
+
+
 def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
     popular = soup.find_all('section')[1]
@@ -23,7 +37,12 @@ def get_data(html):
         url = plugin.find('h3').find('a').get('href')
         r = plugin.find('span', class_='rating-count').find('a').text
         rating = refined(r)
-        print(rating)
+
+        data ={'name': name,
+               'url': url,
+               'rating': rating}
+        # print(data)
+        write_csv(data)
 
     # return plugins
 
