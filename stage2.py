@@ -8,11 +8,14 @@ def get_html(url):
 
 
 def get_data(html):
-    soup = BeautifulSoup(html, 'lmxl')
+    soup = BeautifulSoup(html, 'lxml')
+    popular = soup.find_all('section')[1]
+    return popular
 
 
 def main():
-    pass
+    url = 'https://wordpress.org/plugins/'
+    print(get_data(get_html(url)))
 
 
 if __name__ == '__main__':
