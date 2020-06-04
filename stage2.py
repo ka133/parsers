@@ -13,8 +13,10 @@ def get_data(html):
     plugins = popular.find_all('article')
 
     for plugin in plugins:
-        name = plugin.find('h3')
-        print(name)
+        name = plugin.find('h3').text
+        url = plugin.find('h3').find('a').get('href')
+        rating = plugin.find('span', class_='rating-count').find('a').text
+        print(rating)
 
     # return plugins
 
