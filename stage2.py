@@ -19,9 +19,9 @@ def write_csv(data):
     with open('plugins.csv', 'a') as f:
         writer = csv.writer(f)
 
-        writer.writerow((data['name'],
+        writer.writerow(data['name'],
                          data['url'],
-                         data['rating']))
+                         data['rating'])
 
 
 def get_data(html):
