@@ -14,6 +14,12 @@ def wright_csv(data):
         pass
 
 
+def refined(s):
+    r = s[1:].replace(',', '')
+    r.replace('.', '')
+    return r
+
+
 def get_page_data(html):
     soup = BeautifulSoup(html, 'lxml')
     trs = soup.find('tbody').find_all('tr')
@@ -23,7 +29,7 @@ def get_page_data(html):
         # symbol = tds[1].find('div').find('a').text
         url = 'https://coinmarketcap.com' + tds[1].find('a').get('href')
         price = tds[3].find('a').text
-        print(price[1:])
+        print(refined(price))
 
 
 
