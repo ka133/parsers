@@ -22,15 +22,18 @@ def get_html(url):
 
 
 def write_csv(data):
-    with open('habrvebdev.csv', 'a') as f:
+    with open('habrwebdev.csv', 'a') as f:
         writer = csv.writer(f)
-        pass
+        writer.writerow((data['name'],
+                         data['url'],
+                         data['snippet'],
+                         data['subscribers'],
+                         data['rating']))
 
 
 def get_page_data(html):
     soup = BeautifulSoup(html, 'lxml')
     lis = soup.find_all('li', class_='content-list__item')
-    print(len(lis))
     for li in lis:
         try:
             name = li.find('a', class_='list-snippet__title-link').text
@@ -58,6 +61,13 @@ def get_page_data(html):
                 li.find('div', class_='stats__counter stats__counter_table-grid stats__counter_rating').text)
         except:
             rating = ''
+
+        data = {'name': name,
+                'url': url,
+                'snippet': snippet,
+                'subscribers': subscribers,
+                'rating': rating}
+        write_csv(data)
 
 
 def main():
