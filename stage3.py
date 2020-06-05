@@ -20,11 +20,14 @@ def get_page_data(html):
     for tr in trs:
         tds = tr.find_all('td')
         name = tds[1].find('a', class_='cmc-link').text
-        print(name)
+        # symbol = tds[1].find('div').find('a').text
+        url = 'https://coinmarketcap.com' + tds[1].find('a').get('href')
+        print(url)
 
 
 
-    print(len(trs))
+
+    # print(len(trs))
     # print(trs.text)
 
 
