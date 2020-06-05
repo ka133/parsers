@@ -13,8 +13,7 @@ def write_csv(data):
         writer = csv.writer(f)
         writer.writerow([data['name'],
                          data['url'],
-                         data['price']
-                         ])
+                         data['price']])
 
 
 def refined(s):
@@ -32,7 +31,6 @@ def get_page_data(html):
         # symbol = tds[1].find('div').find('a').text
         url = 'https://coinmarketcap.com' + tds[1].find('a').get('href')
         price = refined(tds[3].find('a').text)
-        # print(refined(price))
 
         data = {'name': name,
                 'url': url,
@@ -41,20 +39,9 @@ def get_page_data(html):
         write_csv(data)
 
 
-
-
-    # print(len(trs))
-    # print(trs.text)
-
-
-
-
-
-
 def main():
     url = 'https://coinmarketcap.com/'
     get_page_data(get_html(url))
-    # print()
 
 
 if __name__ == '__main__':
