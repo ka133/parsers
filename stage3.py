@@ -31,7 +31,7 @@ def get_page_data(html):
         name = tds[1].find('a', class_='cmc-link').text
         # symbol = tds[1].find('div').find('a').text
         url = 'https://coinmarketcap.com' + tds[1].find('a').get('href')
-        price = tds[3].find('a').text
+        price = refined(tds[3].find('a').text)
         # print(refined(price))
 
         data = {'name': name,
