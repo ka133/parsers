@@ -3,6 +3,16 @@ from bs4 import BeautifulSoup
 import csv
 
 
+def refine_rating(s):
+    return s.replace(',', '')
+
+
+def refine_subscribers(s):
+    # 9,3k -> 9300
+    r = s.replace(',', '')
+    return r.replace('k', '000')
+
+
 def get_html(url):
     r = requests.get(url)
     print(r.status_code)
@@ -40,9 +50,13 @@ def get_page_data(html):
         except:
             subscribers = ''
         try:
-            rating = li.find('div', class_='stats__counter stats__counter_table-grid stats__counter_rating').text
+            rating = refine_rating(li.find('div', class_='stats__counter stats__counter_table-grid stats__counter_rating').text)
         except:
             rating = ''
+        print(subscribers)
+        print(refine_subscribers(subscribers))
+
+
 
 
 
