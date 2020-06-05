@@ -8,10 +8,13 @@ def get_html(url):
     return r.text
 
 
-def wright_csv(data):
+def write_csv(data):
     with open('cmc.csv', 'a') as f:
         writer = csv.writer(f)
-        pass
+        writer.writerow([data['name'],
+                         data['url'],
+                         data['price']
+                         ])
 
 
 def refined(s):
@@ -29,7 +32,13 @@ def get_page_data(html):
         # symbol = tds[1].find('div').find('a').text
         url = 'https://coinmarketcap.com' + tds[1].find('a').get('href')
         price = tds[3].find('a').text
-        print(refined(price))
+        # print(refined(price))
+
+        data = {'name': name,
+                'url': url,
+                'price': price}
+
+        write_csv(data)
 
 
 
