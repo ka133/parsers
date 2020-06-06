@@ -18,7 +18,6 @@ def get_html(url):
     print(r.status_code)
     if r.ok:             # check 200
         return r.text
-    print(r.status_code)
 
 
 def write_csv(data):
@@ -71,11 +70,10 @@ def get_page_data(html):
 
 
 def main():
-    # url = 'https://www.kinopoisk.ru/lists/top500/'
-    # url = 'https://8500.ru/cat/ishop-byt.html'
-    # url = 'https://www.liveinternet.ru/rating/ru/'
-    url = 'https://habr.com/ru/companies/category/webdev/'
-    get_page_data(get_html(url))
+    pattern = 'https://habr.com/ru/companies/category/webdev/page{}/'
+    for i in range(1, 6):
+        url = pattern.format(str(i))
+        get_page_data(get_html(url))
 
 
 if __name__ == '__main__':
