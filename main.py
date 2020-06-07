@@ -7,7 +7,7 @@ def write_csv(data):
         writer.writerow((data['name'], data['surname'], data['age']))
 
 
-def write_scv2(data):
+def write_csv2(data):
     with open('name.csv', 'a') as file:
         order = ['name', 'surname', 'age']
         writer = csv.DictWriter(file, fieldnames=order)
@@ -21,8 +21,12 @@ def main():
 
     l = [d, d1, d2]
 
-    for i in l:
-        write_csv(i)
+    with open('cmc.csv') as file:
+        fieldnames = ['name', 'url', 'price']
+        reader = csv.DictReader(file, fieldnames=fieldnames)
+
+        for row in reader:
+            print(dict(row))
 
 
 if __name__ == '__main__':
