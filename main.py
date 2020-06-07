@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 
 
 def main():
-    pass
+    file = open('index.html').read()
+    print(file)
 
 
 
