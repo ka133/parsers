@@ -31,9 +31,6 @@ def main():
         reader = csv.DictReader(file, fieldnames=order)
 
         coins = list(reader)
-        coin = Coin(coins[0])
-        coin.save()
-        print(coin)
 
         for row in coins:
             print(row)
