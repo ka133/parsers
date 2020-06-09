@@ -46,6 +46,16 @@ def main():
     for i in salary:
         get_salary(i.text)
 
+    # ^
+    # &
+    # .
+    # *
+    # '\d'
+    # '\w'
+
+    # @twitter  ^@\w+
+
+
 
 if __name__ == '__main__':
     main()
