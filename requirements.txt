@@ -1,3 +1,6 @@
-requests
-beautifulsoup4
+requests~=2.23.0
+beautifulsoup4~=4.9.1
 lxml
+peewee~=3.13.3
+psycopg2-binary==2.7.5
+psycopg2==2.7.5
