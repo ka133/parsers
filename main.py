@@ -10,14 +10,13 @@ def get_html(url):
 
 def write_csv(data):
     with open('websites.csv', 'a') as file:
-        order = []
+        order = ['name', 'url', 'description', 'traffic', 'percent']
         writer = csv.DictWriter(file, fieldnames=order)
         writer.writerow(data)
 
 
 def get_page_data(text):
         data = text.strip().split('\n')[1:]
-
         for row in data:
             colums = row.strip().split('\t')
             name = colums[0]
@@ -42,9 +41,10 @@ def make_all(url):
 def main():
     #7866
     url = 'https://www.liveinternet.ru/rating///today.tsv?page={}'
-    urls = [url.format(str(i)) for i in range(0, 7867)]
-    print(len(urls))
+    urls = [url.format(str(i)) for i in range(1, 7867)]
 
+    with Pool(20) as p:
+        p.map(make_all, urls)
 
 
 if __name__ == '__main__':
