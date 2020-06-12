@@ -1,5 +1,6 @@
 import requests
 import csv
+from multiprocessing import Pool
 
 
 def get_html(url):
@@ -10,7 +11,7 @@ def get_html(url):
 def write_csv(data):
     with open('websites.csv', 'a') as file:
         order = []
-        writer = write_csv(file, fieldnames=order)
+        writer = csv.DictWriter(file, fieldnames=order)
         writer.writerow(data)
 
 
