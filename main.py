@@ -4,7 +4,7 @@ from multiprocessing import Pool
 
 
 def get_html(url):
-    r = requests
+    r = requests.get(url)
     return r.text
 
 
