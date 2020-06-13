@@ -1,52 +1,58 @@
 import requests
+from bs4 import BeautifulSoup
 import csv
-from multiprocessing import Pool
+import re
 
 
 def get_html(url):
-    r = requests.get(url)
+    user_agent = {'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                                'Chrome/81.0.4044.138 Safari/537.36'}
+
+    r = requests.get(url, headers=user_agent)
     return r.text
 
 
 def write_csv(data):
-    with open('websites.csv', 'a') as file:
-        order = ['name', 'url', 'description', 'traffic', 'percent']
+    with open('testimonials.csv', 'a') as file:
+        order = ['author', 'since', 'email', 'tel']
         writer = csv.DictWriter(file, fieldnames=order)
         writer.writerow(data)
 
 
-def get_page_data(text):
-        data = text.strip().split('\n')[1:]
-        for row in data:
-            colums = row.strip().split('\t')
-            name = colums[0]
-            url = colums[1]
-            description = colums[2]
-            traffic = colums[3]
-            percent = colums[4]
-
-            data = {'name': name,
-                    'url': url,
-                    'description': description,
-                    'traffic': traffic,
-                    'percent': percent}
-            write_csv(data)
+def get_articles(html):
+    soup = BeautifulSoup(html, 'lxml')
+    ts = soup.find_all('article')
+    return ts
 
 
-def make_all(url):
-    text = get_html(url)
-    get_page_data(text)
+def get_page_data(ts):
+    for t in ts:
+        author = t.find('p', class_='testimonial-author').text.strip()
+        since = t.find('p', class_='traxer-since').text.strip()
+        email = t.find('li', class_='email').find('a').text.strip()
+        tel = t.find('li', class_='tel').text.strip()
+        data = {'author': author,
+                'since': since,
+                'email': email,
+                'tel': tel}
+
+        write_csv(data)
 
 
 def main():
-    #7866
-    url = 'https://www.liveinternet.ru/rating///today.tsv?page={}'
-    urls = [url.format(str(i)) for i in range(1, 7867)]
-
-    with Pool(20) as p:
-        p.map(make_all, urls)
+    # 1. Get testimony-conteiner and testimony-list
+    # 2. If list not empty - parsing testimonies
+    # 3. If list is empty - break
+    while True:
+        page = 1
+        url = 'https://catertrax.com/why-catertrax/traxers/page/{}/'.format(str(page))
+        articles = get_articles(get_html(url))
+        if articles:
+            get_page_data(articles)
+            page += 1
+        else:
+            break
 
 
 if __name__ == '__main__':
     main()
-
