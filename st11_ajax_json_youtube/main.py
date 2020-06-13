@@ -1,18 +1,12 @@
-from wikidata.client import Client
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
 
 
 def main():
-    client = Client()
-    entity = client.get('Q20145', load=True)
-    name_prop = client.get('P734')
-    name = entity[name_prop].label
-    # all_data = entity.data
-    # for i in all_data:
-    #     print(i)
-    data = {'id': entity.id,
-            'description': entity.description,
-            'name': name}
-    print(data)
+    pass
+    # url = 'https://www.youtube.com/channel/UCY6zVRa3Km52bsBmpyQnk6A/videos'
+    # print(get_html(url))
 
 
 if __name__ == '__main__':
