@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
-import re
 
 
 def get_html(url):
@@ -27,10 +26,23 @@ def get_articles(html):
 
 def get_page_data(ts):
     for t in ts:
-        author = t.find('p', class_='testimonial-author').text.strip()
-        since = t.find('p', class_='traxer-since').text.strip()
-        email = t.find('li', class_='email').find('a').text.strip()
-        tel = t.find('li', class_='tel').text.strip()
+        try:
+            author = t.find('p', class_='testimonial-author').text.strip()
+        except:
+            author = ''
+        try:
+            since = t.find('p', class_='traxer-since').text.strip()
+        except:
+            since = ''
+        try:
+            email = t.find('li', class_='email').find('a').text.strip()
+        except:
+            email = ''
+        try:
+            tel = t.find('li', class_='tel').text.strip()
+        except:
+            tel = ''
+
         data = {'author': author,
                 'since': since,
                 'email': email,
