@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from random import choice
 
 # https://free-proxy-list.net/
 
@@ -13,9 +14,8 @@ def get_html(url):
 def get_proxy(html):
     soup = BeautifulSoup(html, 'lxml')
     trs = soup.find('table', id='proxylisttable').find_all('tr')[1:11]  # get first 10 proxies
-    for tr in trs:
-        print(tr)
-    # .find_all('tr')[1:]
+
+    proxies = []
 
     for tr in trs:
         tds = tr.find_all('td')
@@ -25,13 +25,15 @@ def get_proxy(html):
 
         proxy = {'schema': schema,
                  'address': ip + port}
-        print(proxy)
+        proxies.append(proxy)
+
+    return choice(proxies)
 
 
 
 def main():
     url = 'https://free-proxy-list.net/'
-    get_proxy(get_html(url))
+    print(get_proxy(get_html(url)))
 
 
 if __name__ == '__main__':
