@@ -32,10 +32,36 @@ def get_page_data(response):
         write_csv(data)
 
 
+def get_next(response):
+    if 'html' in response.headers['Content-Type']:
+        html = response.text
+    else:
+        html = response.json()['load_more_widget_html']
+
+    soup = BeautifulSoup(html, 'lxml')
+
+    try:
+        url = 'https://youtube.com' + soup.find('button', class_='load-more-button').get('data-uix-load-more-href')
+    except:
+        url = ''
+
+    return url
+
+
 def main():
 
     url = 'https://www.youtube.com/channel/UCY6zVRa3Km52bsBmpyQnk6A/videos'
-    print(get_html(url))
+
+    while True:
+        response = get_html(url)
+        get_page_data(response)
+
+        url = get_next(response)
+
+        if url:
+            continue
+        else:
+            break
 
 
 if __name__ == '__main__':
