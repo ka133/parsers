@@ -23,12 +23,15 @@ def get_proxy():
 
 def get_html(url):
     # proxies = {'https': 'ipaddress: 5000'}
-    r = requests.get(url)
-    return r.text
+    p = get_proxy()  # {'schema': '', 'address': ''}
+    proxy = {p['schema']: p['address']}
+    r = requests.get(url, proxies=proxy, timeout=5)
+    return r.json()['origin']  # http://httpbin.org/ip
 
 
 def main():
     print(get_proxy())
+    print(get_html(url='http://httpbin.org/ip'))
 
 
 if __name__ == '__main__':
