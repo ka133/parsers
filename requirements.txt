@@ -10,4 +10,5 @@ requests==2.23.0
 soupsieve==2.0.1
 urllib3==1.25.9
 Wikidata==0.6.1
+numpy==1.18.5
 
