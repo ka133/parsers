@@ -9,6 +9,7 @@ def get_count_posts():
     token = 'a1b42744a1b42744a1b4274443a1c6b8adaa1b4a1b42744ff539e2e241551e4694a2ac9'
     version = 5.21
     domain = 'php2all'
+    # domain = 'club178203889'
     count = 100
     offset = 0
     posts = []
@@ -29,6 +30,7 @@ def get_count_posts():
 
 def file_write(posts):
     with open('php2all.csv', 'w') as file:
+    # with open('club178203889.csv', 'w') as file:
         a_pen = csv.writer(file)
         a_pen.writerow(('likes', 'body', 'url'))
         for post in posts:
